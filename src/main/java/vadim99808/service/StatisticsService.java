@@ -32,6 +32,7 @@ public class StatisticsService {
             count++;
             fileConfiguration.set(hunt.getTreasure().getName(), count);
         }else{
+            fileConfiguration.createSection(hunt.getTreasure().getName());
             fileConfiguration.set(hunt.getTreasure().getName(), 1);
         }
         if(hunt.isAlreadyClaimed()){
@@ -40,6 +41,7 @@ public class StatisticsService {
                 count++;
                 fileConfiguration.set("TotalClaimed", count);
             } else{
+                fileConfiguration.createSection("TotalClaimed");
                 fileConfiguration.set("TotalClaimed", 1);
             }
         }else{
@@ -48,6 +50,7 @@ public class StatisticsService {
                 count++;
                 fileConfiguration.set("TotalNotClaimed", count);
             } else{
+                fileConfiguration.createSection("TotalNotClaimed");
                 fileConfiguration.set("TotalNotClaimed", 1);
             }
         }
