@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Class-Path: \lib\antlr-2.7.7.jar \n
+ \lib\cdi-api-1.1.jar \n
+ \lib\classmate-1.3.0.jar \n
+ \lib\dom4j-1.6.1.jar \n
+ \lib\el-api-2.2.jar \n
+ \lib\geronimo-jta_1.1_spec-1.1.1.jar \n
+ \lib\hibernate-commons-annotations-5.0.1.Final.jar \n
+ \lib\hibernate-core-5.2.2.Final.jar \n
+ \lib\hibernate-entitymanager-5.2.2.Final.jar \n
+ \lib\hibernate-jpa-2.1-api-1.0.0.Final.jar \n
+ \lib\jandex-2.0.0.Final.jar \n
+ \lib\javassist-3.20.0-GA.jar \n
+ \lib\javax.inject-1.jar \n
+ \lib\jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar \n
+ \lib\jboss-logging-3.3.0.Final.jar \n
+ \lib\jsr250-api-1.0.jar \n
+ \lib\sqlite-jdbc-3.25.2.jar \n
+

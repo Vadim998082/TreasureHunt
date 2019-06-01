@@ -1,0 +1,27 @@
+name: TreasureHunt
+main: vadim99808.TreasureHunt
+version: 1.3.5
+api-version: 1.13
+softdepend: [MythicMobs, Vault, WorldGuard, WorldEdit]
+commands:
+  huntstart:
+    description: Starts a hunt
+    usage: /huntstart [here] [name]
+  huntlist:
+    description: Images all available hunts
+    usage: /huntlist
+  huntreload:
+    description: Reloads the plugin
+    usage: /huntreload
+  hunttop:
+    description: Show top 10 hunters
+    usage: /hunttop [value]
+  hunttest:
+    description: Grab some statistic info about spawning of different treasure's
+    usage: /hunttest [amount]
+  hunttestloc:
+    description: Grab some statistic info about spawning of different treasure's with location test
+    usage: /hunttestloc [name] [amount]
+  huntstat:
+    description: Show your personal statistic
+    usage: /huntstat
