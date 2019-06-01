@@ -54,6 +54,11 @@ public class StatisticsService {
                 fileConfiguration.set("TotalNotClaimed", 1);
             }
         }
+        try {
+            fileConfiguration.save(file);
+        } catch (IOException e) {
+            plugin.getLogger().warning("Problem with saving of per day statistics!");
+        }
     }
 
 }
