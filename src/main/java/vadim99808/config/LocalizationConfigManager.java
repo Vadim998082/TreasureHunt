@@ -97,6 +97,9 @@ public class LocalizationConfigManager {
         if(!fileConfiguration.contains("DontHaveStat")){
             fileConfiguration.set("DontHaveStat", "&dYou have not found the chests!");
         }
+        if(!fileConfiguration.contains("TooFarFromAllChests")){
+            fileConfiguration.set("TooFarFromAllChests", "&dYou are to far from all chests! (<numhunts> are active)");
+        }
         try {
             fileConfiguration.save(file);
         } catch (IOException e) {
@@ -160,4 +163,5 @@ public class LocalizationConfigManager {
     public String getDontHaveStat() {
         return dontHaveStat;
     }
+
 }

@@ -401,8 +401,9 @@ public class HuntService{
         return amount;
     }
 
-    public int findDistanceToClosestTreasure(World world, Player player, Material huntTool){
+    public Optional<Integer> findDistanceToClosestTreasure(World world, Player player, Material huntTool){
         int minDistance = 200000;
+        Hunt hunt = null;
         for(Hunt closestHunt: Storage.getInstance().getHuntList()){
             if(closestHunt.getTreasure().getPermission().isPresent() && !player.hasPermission(closestHunt.getTreasure().getPermission().get())){
                 continue;
@@ -411,11 +412,20 @@ public class HuntService{
                 if(closestHunt.getTreasure().getHuntTool().getType().equals(huntTool) && !closestHunt.isAlreadyClaimed()) {
                     if (Math.sqrt(Math.pow(player.getLocation().getBlockX() - closestHunt.getBlock().getX(), 2) + Math.pow(player.getLocation().getBlockZ() - closestHunt.getBlock().getZ(), 2)) < minDistance) {
                         minDistance = (int) Math.sqrt(Math.pow(player.getLocation().getBlockX() - closestHunt.getBlock().getX(), 2) + Math.pow(player.getLocation().getBlockZ() - closestHunt.getBlock().getZ(), 2));
+                        hunt = closestHunt;
                     }
                 }
             }
         }
-        return minDistance;
+        if(hunt.getTreasure().getAugmentDistance().isPresent() && hunt.getTreasure().getExactDistanceAfter().isPresent()){
+            if(minDistance < hunt.getTreasure().getExactDistanceAfter().get()){
+                return Optional.of(minDistance);
+            }else{
+                int divisionResult = minDistance / hunt.getTreasure().getAugmentDistance().get();
+                return Optional.of(divisionResult * hunt.getTreasure().getAugmentDistance().get());
+            }
+        }
+        return Optional.of(minDistance);
     }
 
     public Hunt findClosestTreasure(World world, Player player, Material huntTool){

@@ -15,6 +15,8 @@ public class Treasure {
     private Optional<String> permission;
     private Optional<Integer> chance;
     private Optional<String> appearMessage;
+    private Optional<Integer> exactDistanceAfter;
+    private Optional<Integer> augmentDistance;
     private int minMoney;
     private int maxMoney;
     private int lifeTime;
@@ -176,5 +178,21 @@ public class Treasure {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public Optional<Integer> getExactDistanceAfter() {
+        return exactDistanceAfter;
+    }
+
+    public void setExactDistanceAfter(Optional<Integer> exactDistanceAfter) {
+        this.exactDistanceAfter = exactDistanceAfter;
+    }
+
+    public Optional<Integer> getAugmentDistance() {
+        return augmentDistance;
+    }
+
+    public void setAugmentDistance(Optional<Integer> augmentDistance) {
+        this.augmentDistance = augmentDistance;
     }
 }

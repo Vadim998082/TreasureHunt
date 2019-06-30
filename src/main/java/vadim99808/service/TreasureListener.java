@@ -71,33 +71,36 @@ public class TreasureListener implements Listener {
                     return;
                 }
                 if(huntService.findHunts(world, event.getItem().getType(), player) > 0){
-                    broadcastService.minDistance(plugin.getLocalizationConfigManager().getClosestChest(), huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()), huntService.findHunts(world, event.getItem().getType(), player), player);
-                    if(huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()) < plugin.getDefaultConfigManager().getClosestAfter()){
-                        Hunt hunt = huntService.findClosestTreasure(world, player, event.getItem().getType());
-                        if(hunt != null){
-                            if(!hunt.getClosestPlayers().containsKey(player)){
-                                hunt.getClosestPlayers().put(player, huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()));
-                            }else{
-                                hunt.getClosestPlayers().replace(player, huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()));
+                    if(huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()).isPresent()){
+                        int minDistance = huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()).get();
+                        broadcastService.minDistance(plugin.getLocalizationConfigManager().getClosestChest(), minDistance, huntService.findHunts(world, event.getItem().getType(), player), player);
+                        if(minDistance < plugin.getDefaultConfigManager().getClosestAfter()){
+                            Hunt hunt = huntService.findClosestTreasure(world, player, event.getItem().getType());
+                            if(hunt != null){
+                                if(!hunt.getClosestPlayers().containsKey(player)){
+                                    hunt.getClosestPlayers().put(player, minDistance);
+                                }else{
+                                    hunt.getClosestPlayers().replace(player, minDistance);
+                                }
+                            }
+                            if(hunt.getClosestPlayers().size() == 1 && !hunt.isSomeoneAlreadyClosest()){
+                                broadcastService.broadcast(plugin.getLocalizationConfigManager().getPlayerCloseToChest(), hunt, player.getName());
+                                hunt.setSomeoneAlreadyClosest(true);
                             }
                         }
-                        if(hunt.getClosestPlayers().size() == 1 && !hunt.isSomeoneAlreadyClosest()){
-                            broadcastService.broadcast(plugin.getLocalizationConfigManager().getPlayerCloseToChest(), hunt, player.getName());
-                            hunt.setSomeoneAlreadyClosest(true);
+                        event.getItem().setAmount(event.getItem().getAmount() - 1);
+                        if(!plugin.getLastChecks().containsKey(player)) {
+                            plugin.getLastChecks().put(player, System.currentTimeMillis());
+                        }else{
+                            plugin.getLastChecks().replace(player, System.currentTimeMillis());
                         }
+                        return;
                     }
-                    event.getItem().setAmount(event.getItem().getAmount() - 1);
-                    if(!plugin.getLastChecks().containsKey(player)) {
-                        plugin.getLastChecks().put(player, System.currentTimeMillis());
-                    }else{
-                        plugin.getLastChecks().replace(player, System.currentTimeMillis());
-                    }
-                    return;
                 }else{
                     broadcastService.privateMessage(plugin.getLocalizationConfigManager().getNoChests(), player);
+                    return;
                 }
             }
-            return;
         }
     }
 

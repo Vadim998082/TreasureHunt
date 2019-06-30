@@ -3,6 +3,7 @@ package vadim99808.config;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import io.lumine.xikage.mythicmobs.adapters.bukkit.BukkitAdapter;
 import io.lumine.xikage.mythicmobs.items.MythicItem;
+import javafx.beans.property.ObjectProperty;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -47,6 +48,8 @@ public class ChestConfigManager {
         String name;
         String displayName;
         Optional<String> permission;
+        Optional<Integer> exactDistanceAfter;
+        Optional<Integer> augmentDistance;
 //        int value;
         int maxValue;
         int minValue;
@@ -191,6 +194,16 @@ public class ChestConfigManager {
         }else{
             appearMessage = Optional.empty();
         }
+        if(configuration.contains("ExactDistanceAfter")){
+            exactDistanceAfter = Optional.ofNullable(configuration.getInt("ExactDistanceAfter"));
+        }else{
+            exactDistanceAfter = Optional.empty();
+        }
+        if(configuration.contains("AugmentDistance")){
+            augmentDistance = Optional.ofNullable(configuration.getInt("AugmentDistance"));
+        }else{
+            augmentDistance = Optional.empty();
+        }
 
         List<ItemMap> itemStackList = new ArrayList<>();
         for(String stringItem : itemSetString){
@@ -334,6 +347,8 @@ public class ChestConfigManager {
         treasure.setMaxLight(maxLight);
         treasure.setMinLight(mimLight);
         treasure.setAppearMessage(appearMessage);
+        treasure.setExactDistanceAfter(exactDistanceAfter);
+        treasure.setAugmentDistance(augmentDistance);
         return treasure;
     }
 
