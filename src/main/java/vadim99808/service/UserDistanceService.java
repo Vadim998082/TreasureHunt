@@ -20,7 +20,6 @@ public class UserDistanceService {
                         newDistance = huntService.transformDistance(realDistance);
                         i++;
                     }while (Storage.getInstance().getPlayerDistanceMap().get(player).getRecalcDistance() < newDistance && i < 40);
-                    System.out.println("iter: " + i);
                     savePlayerDistance(player,hunt, realDistance, newDistance);
                     return newDistance;
                 }else{
@@ -31,7 +30,6 @@ public class UserDistanceService {
                             newDistance = huntService.transformDistance(realDistance);
                             i++;
                         }while (Storage.getInstance().getPlayerDistanceMap().get(player).getRecalcDistance() > newDistance && i < 40);
-                        System.out.println("iter: " + i);
                         savePlayerDistance(player,hunt, realDistance, newDistance);
                         return newDistance;
                     }
