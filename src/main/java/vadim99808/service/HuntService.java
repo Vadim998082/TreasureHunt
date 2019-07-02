@@ -209,6 +209,7 @@ public class HuntService{
         hunt.setRemainingTime(treasureToSpawn.getLifeTime() * 60);
         hunt.setClosestPlayers(new HashMap<>());
         hunt.setSomeoneAlreadyClosest(false);
+        hunt.setUuid(UUID.randomUUID());
         TreasurePlacer treasurePlacer = new TreasurePlacer();
         treasurePlacer.setHunt(hunt);
         treasurePlacer.runTask(plugin);
@@ -245,6 +246,7 @@ public class HuntService{
         hunt.setRemainingTime(treasureToSpawn.getLifeTime() * 60);
         hunt.setClosestPlayers(new HashMap<>());
         hunt.setSomeoneAlreadyClosest(false);
+        hunt.setUuid(UUID.randomUUID());
         TreasurePlacer treasurePlacer = new TreasurePlacer();
         treasurePlacer.setHunt(hunt);
         treasurePlacer.runTask(plugin);
@@ -279,6 +281,7 @@ public class HuntService{
         hunt.setRemainingTime(treasure.getLifeTime() * 60);
         hunt.setClosestPlayers(new HashMap<>());
         hunt.setSomeoneAlreadyClosest(false);
+        hunt.setUuid(UUID.randomUUID());
         TreasurePlacer treasurePlacer = new TreasurePlacer();
         treasurePlacer.setHunt(hunt);
         treasurePlacer.runTask(plugin);
@@ -318,6 +321,7 @@ public class HuntService{
         hunt.setRemainingTime(treasure.getLifeTime() * 60);
         hunt.setClosestPlayers(new HashMap<>());
         hunt.setSomeoneAlreadyClosest(false);
+        hunt.setUuid(UUID.randomUUID());
         TreasurePlacer treasurePlacer = new TreasurePlacer();
         treasurePlacer.setHunt(hunt);
         treasurePlacer.runTask(plugin);
@@ -417,7 +421,7 @@ public class HuntService{
                 }
             }
         }
-        if(hunt.getTreasure().getAugmentDistance().isPresent() && hunt.getTreasure().getExactDistanceAfter().isPresent()){
+        if(hunt.getTreasure().getAugmentDistance().isPresent() && hunt.getTreasure().getExactDistanceAfter().isPresent() && !plugin.getDefaultConfigManager().isImprovedDistanceCalc()){
             if(minDistance < hunt.getTreasure().getExactDistanceAfter().get()){
                 return Optional.of(minDistance);
             }else{
@@ -426,6 +430,19 @@ public class HuntService{
             }
         }
         return Optional.of(minDistance);
+    }
+
+    public int transformDistance(int distance){
+        float coeff = (float) ((distance ^ (1/8))/5 - 0.15);
+        coeff = 1 + coeff;
+        Random random = new Random();
+        float randomCoeff = random.nextInt(11)/100;
+        if(random.nextInt(1) == 0) {
+            coeff = coeff * randomCoeff + coeff;
+        }else{
+            coeff = coeff - coeff * randomCoeff;
+        }
+        return (int) (distance * coeff);
     }
 
     public Hunt findClosestTreasure(World world, Player player, Material huntTool){

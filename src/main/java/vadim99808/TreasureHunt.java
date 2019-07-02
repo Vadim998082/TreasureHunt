@@ -44,6 +44,7 @@ public class TreasureHunt extends JavaPlugin {
     private HuntService huntService;
     private BroadcastService broadcastService;
     private StatisticsService statisticsService;
+    private UserDistanceService userDistanceService;
     private Map<String, ItemStack> enchantedItems;
     private List<Treasure> treasureList;
     private List<Material> huntToolList;
@@ -112,6 +113,7 @@ public class TreasureHunt extends JavaPlugin {
         userStatisticsDao.setDataFileDirectory(dataDirectory);
         userStatisticsService = new UserStatisticsService();
         statisticsService = new StatisticsService();
+        userDistanceService = new UserDistanceService();
         huntToolList = huntService.loadHuntToolList(treasureList);
         getServer().getPluginManager().registerEvents(new TreasureListener(), this);
         getCommand("huntstart").setExecutor(new StartHuntExecutor());
@@ -258,5 +260,9 @@ public class TreasureHunt extends JavaPlugin {
 
     public StatisticsService getStatisticsService() {
         return statisticsService;
+    }
+
+    public UserDistanceService getUserDistanceService() {
+        return userDistanceService;
     }
 }

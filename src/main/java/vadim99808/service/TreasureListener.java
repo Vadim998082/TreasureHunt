@@ -18,8 +18,9 @@ import vadim99808.storage.Storage;
 public class TreasureListener implements Listener {
 
     private TreasureHunt plugin = TreasureHunt.getInstance();
-    private BroadcastService broadcastService = new BroadcastService();
+    private BroadcastService broadcastService = plugin.getBroadcastService();
     private HuntService huntService = plugin.getHuntService();
+    private UserDistanceService userDistanceService = plugin.getUserDistanceService();
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event){
@@ -73,6 +74,11 @@ public class TreasureListener implements Listener {
                 if(huntService.findHunts(world, event.getItem().getType(), player) > 0){
                     if(huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()).isPresent()){
                         int minDistance = huntService.findDistanceToClosestTreasure(player.getWorld(), player, event.getItem().getType()).get();
+                        if(plugin.getDefaultConfigManager().isImprovedDistanceCalc()){
+                            int recalcDistance = huntService.transformDistance(minDistance);
+                            recalcDistance = userDistanceService.checkPlayerDistance(player, huntService.findClosestTreasure(world, player, event.getItem().getType()), minDistance, recalcDistance);
+                            minDistance = recalcDistance;
+                        }
                         broadcastService.minDistance(plugin.getLocalizationConfigManager().getClosestChest(), minDistance, huntService.findHunts(world, event.getItem().getType(), player), player);
                         if(minDistance < plugin.getDefaultConfigManager().getClosestAfter()){
                             Hunt hunt = huntService.findClosestTreasure(world, player, event.getItem().getType());

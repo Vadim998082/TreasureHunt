@@ -8,6 +8,7 @@ import vadim99808.TreasureHunt;
 import vadim99808.service.TreasureDestroyer;
 
 import java.util.Map;
+import java.util.UUID;
 
 
 public class Hunt extends Thread{
@@ -23,6 +24,7 @@ public class Hunt extends Thread{
     private boolean alreadyClaimed;
     private Map<Player, Integer> closestPlayers;
     private boolean someoneAlreadyClosest;
+    private UUID uuid;
 
 
 
@@ -132,5 +134,13 @@ public class Hunt extends Thread{
 
     public void setSomeoneAlreadyClosest(boolean someoneAlreadyClosest) {
         this.someoneAlreadyClosest = someoneAlreadyClosest;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }

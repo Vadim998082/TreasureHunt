@@ -27,6 +27,7 @@ public class DefaultConfigManager {
     private int destroyDelay;
     private int checkDelay;
     private int closestAfter;
+    private boolean improvedDistanceCalc;
 
     public DefaultConfigManager(){
         spawnDelay = 60;
@@ -45,6 +46,7 @@ public class DefaultConfigManager {
         destroyDelay = 2;
         checkDelay = 5;
         closestAfter = 200;
+        improvedDistanceCalc = false;
     }
 
     public boolean isConfigExists(){
@@ -80,6 +82,7 @@ public class DefaultConfigManager {
         ConfigurationSection searchOptions = fileConfiguration.createSection("Search");
         searchOptions.set("CheckDelay", checkDelay);
         searchOptions.set("ClosestAfter", closestAfter);
+        searchOptions.set("ImprovedDistanceCalc", improvedDistanceCalc);
         try {
             fileConfiguration.save(file);
         } catch (IOException e) {
@@ -108,6 +111,7 @@ public class DefaultConfigManager {
         minLight = defaultTreasure.getInt("MinLight");
         checkDelay = fileConfiguration.getInt("Search.CheckDelay");
         closestAfter = fileConfiguration.getInt("Search.ClosestAfter");
+        improvedDistanceCalc = fileConfiguration.getBoolean("Search.ImprovedDistanceCalc");
         destroyDelay = fileConfiguration.getInt("Destroy.DestroyDelay");
         try {
             fileConfiguration.save(file);
@@ -167,6 +171,9 @@ public class DefaultConfigManager {
         }
         if(!fileConfiguration.contains("Search.ClosestAfter")){
             fileConfiguration.set("Search.ClosestAfter", closestAfter);
+        }
+        if(!fileConfiguration.contains("Search.ImprovedDistanceCalc")){
+            fileConfiguration.set("Search.ImprovedDistanceCalc", improvedDistanceCalc);
         }
         try {
             fileConfiguration.save(file);
@@ -234,4 +241,11 @@ public class DefaultConfigManager {
         return closestAfter;
     }
 
+    public boolean isImprovedDistanceCalc() {
+        return improvedDistanceCalc;
+    }
+
+    public void setImprovedDistanceCalc(boolean improvedDistanceCalc) {
+        this.improvedDistanceCalc = improvedDistanceCalc;
+    }
 }
