@@ -57,4 +57,5 @@ public class UserDistanceService {
         playerDistance.setRecalcDistance(recalcDistance);
         Storage.getInstance().getPlayerDistanceMap().put(player, playerDistance);
     }
+
 }
