@@ -432,17 +432,19 @@ public class HuntService{
         return Optional.of(minDistance);
     }
 
-    public int transformDistance(int distance){
-        float coeff = (float) ((distance ^ (1/8))/5 - 0.15);
+    public int transformDistance(int distance){ //не трогать! убьёт!
+        float coeff = (float) ((Math.pow(distance, 0.125))/5 - 0.15);
         coeff = 1 + coeff;
         Random random = new Random();
-        float randomCoeff = random.nextInt(11)/100;
-        if(random.nextInt(1) == 0) {
+        int randomInt = random.nextInt(11);
+        float randomCoeff = (float) (randomInt * 0.01);
+        if(random.nextInt(2) == 0) {
             coeff = coeff * randomCoeff + coeff;
         }else{
             coeff = coeff - coeff * randomCoeff;
         }
-        return (int) (distance * coeff);
+        float calcDistance = distance * coeff;
+        return (int) (calcDistance);
     }
 
     public Hunt findClosestTreasure(World world, Player player, Material huntTool){
