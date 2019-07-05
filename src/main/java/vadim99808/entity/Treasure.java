@@ -27,6 +27,8 @@ public class Treasure {
     private ItemStack huntTool;
     private List<WorldMap> worldList;
     private List<ItemMap> itemStackList;
+    private Optional<String> command;
+    private Optional<String> commandExecutor;
 
     public String getName() {
         return name;
@@ -194,5 +196,21 @@ public class Treasure {
 
     public void setAugmentDistance(Optional<Integer> augmentDistance) {
         this.augmentDistance = augmentDistance;
+    }
+
+    public Optional<String> getCommand() {
+        return command;
+    }
+
+    public void setCommand(Optional<String> command) {
+        this.command = command;
+    }
+
+    public Optional<String> getCommandExecutor() {
+        return commandExecutor;
+    }
+
+    public void setCommandExecutor(Optional<String> commandExecutor) {
+        this.commandExecutor = commandExecutor;
     }
 }

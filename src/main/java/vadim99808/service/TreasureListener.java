@@ -29,6 +29,9 @@ public class TreasureListener implements Listener {
             for(Hunt hunt: Storage.getInstance().getHuntList()){
                 if(hunt.getBlock().getLocation().equals(event.getClickedBlock().getLocation())){
                     if(!hunt.isAlreadyClaimed()){
+                        if(!plugin.getCommandDispatcher().dispatchCommand(player, hunt)){
+                            plugin.getLogger().warning("Something got wrong with the command execution!");
+                        }
                         hunt.interrupt();
                         hunt.setAlreadyClaimed(true);
                         hunt.setClaimedPlayer(player);

@@ -67,6 +67,8 @@ public class ChestConfigManager {
         Set<String> itemSetString;
         Set<String> onlyOnceSetString;
         String huntToolString;
+        Optional<String> command;
+        Optional<String> commandExecutor;
         if(configuration.contains("Name")){
             name = configuration.getString("Name");
         }else{
@@ -203,6 +205,19 @@ public class ChestConfigManager {
             augmentDistance = Optional.ofNullable(configuration.getInt("AugmentDistance"));
         }else{
             augmentDistance = Optional.empty();
+        }
+        if(configuration.contains("Command")){
+            command = Optional.ofNullable(configuration.getString("Command"));
+        }else{
+            command = Optional.empty();
+        }
+        if(configuration.contains("CommandExecutor")){
+            commandExecutor = Optional.ofNullable(configuration.getString("CommandExecutor"));
+            if(!commandExecutor.get().equals("player") && !commandExecutor.get().equals("console")){
+                plugin.getLogger().warning("Unknown command executor! Check " + file.getName() + " file!");
+            }
+        }else{
+            commandExecutor = Optional.empty();
         }
 
         List<ItemMap> itemStackList = new ArrayList<>();
@@ -349,6 +364,8 @@ public class ChestConfigManager {
         treasure.setAppearMessage(appearMessage);
         treasure.setExactDistanceAfter(exactDistanceAfter);
         treasure.setAugmentDistance(augmentDistance);
+        treasure.setCommand(command);
+        treasure.setCommandExecutor(commandExecutor);
         return treasure;
     }
 

@@ -45,6 +45,7 @@ public class TreasureHunt extends JavaPlugin {
     private BroadcastService broadcastService;
     private StatisticsService statisticsService;
     private UserDistanceService userDistanceService;
+    private CommandDispatcher commandDispatcher;
     private Map<String, ItemStack> enchantedItems;
     private List<Treasure> treasureList;
     private List<Material> huntToolList;
@@ -114,6 +115,7 @@ public class TreasureHunt extends JavaPlugin {
         userStatisticsService = new UserStatisticsService();
         statisticsService = new StatisticsService();
         userDistanceService = new UserDistanceService();
+        commandDispatcher = new CommandDispatcher();
         huntToolList = huntService.loadHuntToolList(treasureList);
         getServer().getPluginManager().registerEvents(new TreasureListener(), this);
         getCommand("huntstart").setExecutor(new StartHuntExecutor());
@@ -264,5 +266,9 @@ public class TreasureHunt extends JavaPlugin {
 
     public UserDistanceService getUserDistanceService() {
         return userDistanceService;
+    }
+
+    public CommandDispatcher getCommandDispatcher() {
+        return commandDispatcher;
     }
 }
