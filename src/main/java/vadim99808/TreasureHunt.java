@@ -125,6 +125,7 @@ public class TreasureHunt extends JavaPlugin {
         getCommand("hunttest").setExecutor(new HuntTestExecutor());
         getCommand("hunttestloc").setExecutor(new HuntTestLocExecutor());
         getCommand("huntstat").setExecutor(new HuntStatExecutor());
+        getCommand("huntcreate").setExecutor(new HuntCreateExecutor());
         getLogger().info("Successfully loaded " + enchantedItems.size() + " enchanted item's.");
         getLogger().info("Successfully loaded " + treasureList.size() + " treasure's.");
         timer = new Timer();

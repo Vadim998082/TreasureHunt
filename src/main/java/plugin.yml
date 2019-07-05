@@ -25,3 +25,6 @@ commands:
   huntstat:
     description: Show your personal statistic
     usage: /huntstat
+  huntcreate:
+    description: Creates an amount of yml files in chest folder
+    usage: /huntcreate [amount]
