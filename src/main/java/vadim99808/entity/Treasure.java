@@ -1,5 +1,6 @@
 package vadim99808.entity;
 
+import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class Treasure {
     private List<ItemMap> itemStackList;
     private Optional<String> command;
     private Optional<String> commandExecutor;
+    private Optional<Biome> biome;
 
     public String getName() {
         return name;
@@ -212,5 +214,13 @@ public class Treasure {
 
     public void setCommandExecutor(Optional<String> commandExecutor) {
         this.commandExecutor = commandExecutor;
+    }
+
+    public Optional<Biome> getBiome() {
+        return biome;
+    }
+
+    public void setBiome(Optional<Biome> biome) {
+        this.biome = biome;
     }
 }

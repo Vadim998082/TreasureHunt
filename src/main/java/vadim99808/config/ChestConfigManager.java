@@ -7,6 +7,7 @@ import javafx.beans.property.ObjectProperty;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -69,6 +70,8 @@ public class ChestConfigManager {
         String huntToolString;
         Optional<String> command;
         Optional<String> commandExecutor;
+        String biomeString;
+        Optional<Biome> biome;
         if(configuration.contains("Name")){
             name = configuration.getString("Name");
         }else{
@@ -219,6 +222,17 @@ public class ChestConfigManager {
         }else{
             commandExecutor = Optional.empty();
         }
+        if(configuration.contains("Biome")){
+            biomeString = configuration.getString("Biome");
+            try {
+                biome = Optional.of(Biome.valueOf(biomeString.toUpperCase()));
+            }catch (IllegalArgumentException exception){
+                biome = Optional.empty();
+                plugin.getLogger().warning("Unknown biome " + biomeString + " in " + file.getName() + " file! Biome setted to null!");
+            }
+        }else{
+            biome = Optional.empty();
+        }
 
         List<ItemMap> itemStackList = new ArrayList<>();
         for(String stringItem : itemSetString){
@@ -366,6 +380,7 @@ public class ChestConfigManager {
         treasure.setAugmentDistance(augmentDistance);
         treasure.setCommand(command);
         treasure.setCommandExecutor(commandExecutor);
+        treasure.setBiome(biome);
         return treasure;
     }
 

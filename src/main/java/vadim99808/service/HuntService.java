@@ -10,6 +10,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -361,6 +362,11 @@ public class HuntService{
     }
 
     private boolean checkLocation(Location location, Treasure treasure){
+        if(treasure.getBiome().isPresent()){
+            if(!location.getWorld().getBiome(location.getBlockX(), location.getBlockZ()).equals(treasure.getBiome().get())){
+                return false;
+            }
+        }
         if(plugin.getWorldGuardPlugin() != null && plugin.getWorldEditPlugin() != null) {
             RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
             RegionManager regionManager = container.get(BukkitAdapter.adapt(location.getWorld()));
