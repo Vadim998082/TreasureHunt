@@ -6,6 +6,8 @@ public class MMBossMap {
     private MythicMob mythicMob;
     private int amount;
     private int chance;
+    private String name;
+
 
     public MythicMob getMythicMob() {
         return mythicMob;
