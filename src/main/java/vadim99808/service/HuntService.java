@@ -362,8 +362,9 @@ public class HuntService{
     }
 
     private boolean checkLocation(Location location, Treasure treasure){
-        if(treasure.getBiome().isPresent()){
-            if(!location.getWorld().getBiome(location.getBlockX(), location.getBlockZ()).equals(treasure.getBiome().get())){
+        if(treasure.getBiomeList().isPresent()){
+            List<Biome> biomeList = treasure.getBiomeList().get();
+            if(!biomeList.contains(location.getBlock().getBiome())){
                 return false;
             }
         }

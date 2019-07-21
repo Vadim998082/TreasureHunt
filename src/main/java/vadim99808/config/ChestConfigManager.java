@@ -70,8 +70,8 @@ public class ChestConfigManager {
         String huntToolString;
         Optional<String> command;
         Optional<String> commandExecutor;
-        String biomeString;
-        Optional<Biome> biome;
+        List<String> biomesStringList;
+        Optional<List<Biome>> biomesList;
         if(configuration.contains("Name")){
             name = configuration.getString("Name");
         }else{
@@ -222,16 +222,24 @@ public class ChestConfigManager {
         }else{
             commandExecutor = Optional.empty();
         }
-        if(configuration.contains("Biome")){
-            biomeString = configuration.getString("Biome");
-            try {
-                biome = Optional.of(Biome.valueOf(biomeString.toUpperCase()));
-            }catch (IllegalArgumentException exception){
-                biome = Optional.empty();
-                plugin.getLogger().warning("Unknown biome " + biomeString + " in " + file.getName() + " file! Biome setted to null!");
+        if(configuration.contains("Biomes")){
+            biomesStringList = configuration.getStringList("Biomes");
+            List<Biome> biomeList = new ArrayList<>();
+            for(String biomeString: biomesStringList) {
+                try {
+                    Biome biome = Biome.valueOf(biomeString.toUpperCase());
+                    biomeList.add(biome);
+                } catch (IllegalArgumentException exception) {
+                    plugin.getLogger().warning("Unknown biome " + biomeString + " in " + file.getName() + " file!");
+                }
+            }
+            if(biomeList.isEmpty()){
+                biomesList = Optional.empty();
+            }else{
+                biomesList = Optional.of(biomeList);
             }
         }else{
-            biome = Optional.empty();
+            biomesList = Optional.empty();
         }
 
         List<ItemMap> itemStackList = new ArrayList<>();
@@ -380,7 +388,7 @@ public class ChestConfigManager {
         treasure.setAugmentDistance(augmentDistance);
         treasure.setCommand(command);
         treasure.setCommandExecutor(commandExecutor);
-        treasure.setBiome(biome);
+        treasure.setBiomeList(biomesList);
         return treasure;
     }
 

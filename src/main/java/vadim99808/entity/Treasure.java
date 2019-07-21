@@ -30,7 +30,7 @@ public class Treasure {
     private List<ItemMap> itemStackList;
     private Optional<String> command;
     private Optional<String> commandExecutor;
-    private Optional<Biome> biome;
+    private Optional<List<Biome>> biome;
 
     public String getName() {
         return name;
@@ -216,11 +216,11 @@ public class Treasure {
         this.commandExecutor = commandExecutor;
     }
 
-    public Optional<Biome> getBiome() {
+    public Optional<List<Biome>> getBiomeList() {
         return biome;
     }
 
-    public void setBiome(Optional<Biome> biome) {
+    public void setBiomeList(Optional<List<Biome>> biome) {
         this.biome = biome;
     }
 }
